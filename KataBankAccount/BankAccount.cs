@@ -9,34 +9,34 @@ namespace KataBankAccount
     public class BankAccount
     {
         private int _amount = 0;
-        private List<Record> _records;
+        private List<Operation> _operations;
 
 
         public BankAccount()
         {
-            _records = new List<Record>();
+            _operations = new List<Operation>();
         }
 
-        public int getAmount()
+        public int GetAmount()
         {
             return _amount;
         }
 
-        public List<Record> getRecord()
+        public List<Operation> GetRecord()
         {
-            return _records;
+            return _operations;
         }
 
-        public void deposit(int amount)
+        public void Deposit(int amount)
         {
             _amount += amount;
-            _records.Add(new Record(this, "Deposit", amount));
+            _operations.Add(new Operation(this, "Deposit", amount));
         }
 
-        public void withdraw(int amount)
+        public void Withdraw(int amount)
         {
             _amount -= amount;
-            _records.Add(new Record(this, "Withdraw", amount));
+            _operations.Add(new Operation(this, "Withdraw", amount));
         }
 
         public string toString()
@@ -45,7 +45,7 @@ namespace KataBankAccount
             str += "------------------------------------------ \n";
             str += "--\t Current Balance :\t" + _amount + "\t--\n";
             str += "------------------------------------------ \n";
-            foreach (Record record in _records)
+            foreach (Operation record in _operations)
             {
                 str += record.toString();
             }
