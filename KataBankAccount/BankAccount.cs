@@ -29,17 +29,31 @@ namespace KataBankAccount
 
         public void Deposit(int amount)
         {
-            _amount += amount;
-            _operations.Add(new Operation(this, "Deposit", amount));
+            if (_amount > 0)
+            {
+                _amount += amount;
+                _operations.Add(new Operation(this, "Deposit", amount));
+            }
+            else
+            {
+                Console.WriteLine("Negative amount");
+            }
         }
 
         public void Withdraw(int amount)
         {
-            _amount -= amount;
-            _operations.Add(new Operation(this, "Withdraw", amount));
+            if (_amount - amount >= 0)
+            {
+                _amount -= amount;
+                _operations.Add(new Operation(this, "Withdraw", amount));
+            }
+            else
+            {
+                Console.WriteLine("Unsufficiant credit");
+            }
         }
 
-        public string toString()
+        public string GetHistory()
         {
             String str = "";
             str += "------------------------------------------ \n";
@@ -51,5 +65,20 @@ namespace KataBankAccount
             }
             return str;
         }
+
+        public override bool Equals(BankAccount other)
+        {
+            if (_amount == other.GetAmount() && _operations.GetHashCode() == other.GetRecord().GetHashCode())
+                return false;
+        }
+
+        public override int GetHashCode()
+        {
+            int result = 17;
+            result += _amount.GetHashCode() * 17;
+            result += _operations.GetHashCode() * 17;
+            return result;
+        }
+
     }
 }

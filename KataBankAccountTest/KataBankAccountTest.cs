@@ -19,6 +19,17 @@ namespace KataBankAccountTest
         }
 
         [TestMethod]
+        public void should_account_is_not_increased_when_deposit_bad_value()
+        {
+            BankAccount bankAccount = new BankAccount();
+            int oldAmount = bankAccount.GetAmount();
+
+            bankAccount.Deposit(-100);
+
+            Assert.AreEqual(bankAccount.GetAmount() - oldAmount, 0);
+        }
+
+        [TestMethod]
         public void should_account_is_decreased_by_500_when_withdraw_of_500()
         {
             BankAccount bankAccount = new BankAccount();
@@ -28,6 +39,18 @@ namespace KataBankAccountTest
             bankAccount.Withdraw(500);
 
             Assert.AreEqual(bankAccount.GetAmount(), 0);
+        }
+
+        [TestMethod]
+        public void should_account_is_not_decreased_by_500_when_withdraw_of_bad_value()
+        {
+            BankAccount bankAccount = new BankAccount();
+            bankAccount.Deposit(500);
+            int oldAmount = bankAccount.GetAmount();
+
+            bankAccount.Withdraw(-500);
+
+            Assert.AreEqual(bankAccount.GetAmount(), 500);
         }
 
         [TestMethod]
@@ -55,7 +78,7 @@ namespace KataBankAccountTest
             str += "--\t Current Balance :\t" + amount + "\t--\n";
             str += "------------------------------------------ \n";
             Operation operation = new Operation(bankAccount, "Deposit", amount);
-            str += operation.toString();
+            str += operation.GetHistory();
             Assert.IsTrue(bankAccount.toString().Equals(str));
         }
 
